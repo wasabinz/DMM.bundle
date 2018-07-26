@@ -117,7 +117,7 @@ class DMMAgent(Agent.Movies):
             if id_code == 'hodv':
                 rjust_c = 6
 
-            jav_id = id_code + id_num .rjust(rjust_c, '0')
+            jav_id = id_code + id_num.rjust(rjust_c, '0')
 
         return jav_id
 
@@ -135,11 +135,10 @@ class DMMAgent(Agent.Movies):
             if found:
                 self.log('Found %s result(s) for query "%s',
                          len(found), jav_id)
-                i = 1
-                for f in found:
+
+                for i, f in enumerate(found, 1):
                     self.log('    %s. %s [%s] {%s}', i,
                              f['title'], f['url'], f['thumb'])
-                    i += 1
             else:
                 self.log('No results found for query "%s"', jav_id)
                 return
