@@ -35,17 +35,15 @@ class DMMAgent(Agent.Movies):
         if Prefs['debug']:
             Log(message, *args)
 
-	            
     def get_proxies(self):
         """ pull proxy settings from preference. """
-        
+
         proxies = {}
         if Prefs['httpproxy'] is not None:
             proxies['http'] = Prefs["httpproxy"]
         if Prefs['httpsproxy'] is not None:
             proxies['https'] = Prefs["httpsproxy"]
         return proxies
-		
 
     def get_item_cid_from_url(self, url):
         """ This function extracts item id from the url. The url is the
@@ -158,8 +156,7 @@ class DMMAgent(Agent.Movies):
                 self.log('No results found for query "%s"', jav_id)
                 return
 
-            self.log(
-                '-----------------------------------------------------------------------')
+            self.log('-' * 60)
 
             # walk the found items and gather extended information
             score = 100
