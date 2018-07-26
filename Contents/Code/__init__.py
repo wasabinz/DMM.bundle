@@ -29,11 +29,11 @@ class DMMAgent(Agent.Movies):
     accepts_from = ['com.plexapp.agents.localmedia']
     primary_provider = True
 
-    def log(self, message, *args):
+    def log(self, message, *args, **kwargs):
         """ Writes message to the log file. """
 
         if Prefs['debug']:
-            Log(message, *args)
+            Log.Debug(message, *args, **kwargs)
 
     def get_proxies(self):
         """ pull proxy settings from preference. """
