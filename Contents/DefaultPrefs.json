@@ -1,0 +1,26 @@
+[
+	{
+		"id": "debug",
+		"label": "Ouput debugging info in logs",
+		"type": "bool",
+		"default": "false"
+	},
+	{
+        "id": "httpproxy",
+        "label": "HTTP proxy",
+        "type": "text",
+        "default": ""
+    },
+	{
+        "id": "httpsproxy",
+        "label": "HTTPS proxy",
+        "type": "text",
+        "default": ""
+    },
+	{
+        "id": "excludegenre",
+        "label": "A semicolon delimited array of genres to exclude (URL encoding)",
+        "type": "text",
+        "default": ""
+    }
+]
