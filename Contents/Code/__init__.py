@@ -45,23 +45,11 @@ class DMMAgent(Agent.Movies):
             proxies['https'] = Prefs["httpsproxy"]
         return proxies
 
-    def get_item_cid_from_url(self, url):
-        """ This function extracts item id from the url. The url is the
-        link to the item on the DMM site.
-        """
+    def get_item_from_link(self, item, link):
 
         item_id = ''
-        # extract DMM ID from link
-        id_match = re.search(r'cid=([^/]+)/', url)
-        if id_match:
-            item_id = id_match.group(1)
-        return item_id
-
-    def get_item_id_from_url(self, url):
-
-        item_id = ''
-        # extract DMM ID from link
-        id_match = re.search(r'id=([^/]+)/', url)
+        # extract ID from link
+        id_match = re.search('{}=([^/]+)/'.format(item), link)
         if id_match:
             item_id = id_match.group(1)
         return item_id
@@ -96,7 +84,7 @@ class DMMAgent(Agent.Movies):
             title = r.text
             murl = r.get('href')
             # pull item id from URL
-            item_id = self.get_item_cid_from_url(murl)
+            item_id = self.get_item_from_link('cid', murl)
             if not item_id:
                 continue
             # generate thumbnail url
@@ -254,7 +242,7 @@ class DMMAgent(Agent.Movies):
                     # Add to actor
                     role.name = a.text
                     # Add actor photo
-                    actor_id = self.get_item_id_from_url(a.get('href'))
+                    actor_id = self.get_item_from_link('id', a.get('href'))
                     role.photo = self.get_actor_photo(actor_id, a.text)
 
             # director
