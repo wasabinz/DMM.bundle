@@ -102,7 +102,7 @@ class DMMAgent(Agent.Movies):
         """
 
         jav_id = ''
-        id_match = re.search(ur'(([a-zA-Z]{2,5})|(T28))[-]?(\d{3,6})', name)
+        id_match = re.search(r'(([a-zA-Z]{2,5})|(T28))[-]?(\d{3,6})', name)
         if id_match:
 
             # jav id is broken up into ID code (the first few letters)
