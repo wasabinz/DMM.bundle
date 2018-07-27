@@ -172,7 +172,7 @@ class DMMAgent(Agent.Movies):
 
     def update(self, metadata, media, lang):
 
-        self.log('***** UPDATING "{}" ID: {} - DMMAgent v.{} *****',
+        self.log('***** UPDATING "%s" ID: %s - DMMAgent v.%s *****',
                  media.title, metadata.id, VERSION_NO)
         try:
             # Make url
@@ -275,7 +275,7 @@ class DMMAgent(Agent.Movies):
             # of 5)
             rating = metadata.rating = self.get_rating(root) * 2
             if rating:
-                self.log('Rating: {:.1f}'.format(rating))
+                self.log('Rating: %.1f', rating)
                 metadata.rating = rating
 
             # Posters
@@ -286,4 +286,4 @@ class DMMAgent(Agent.Movies):
 
         except Exception as e:
             Log.Error(
-                'Error obtaining data for item with id %s (%s) [%s] ', metadata.id, url, e.message)
+                'Error obtaining data for item with id %s (%s) [%s]', metadata.id, url, e.message)
