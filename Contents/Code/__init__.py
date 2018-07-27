@@ -10,13 +10,13 @@ ICON = 'icon-default.png'
 # URLS
 VERSION_NO = '0.2015.8.17.0'
 DMM_BASE_URL = 'http://www.dmm.co.jp/'
-DMM_ITEM_INFO = DMM_BASE_URL + 'digital/videoa/-/detail/=/cid=%s/'
+DMM_ITEM_INFO = DMM_BASE_URL + 'digital/videoa/-/detail/=/cid={}/'
 DMM_SEARCH_URL = DMM_BASE_URL + \
     'search/?category=digital_videoa&searchstr=%s&analyze=V1EBDFYOUAU_&redirect=1&sort=date&limit=30&view=text&enc=UTF-8&commit=%%E6%%A4%%9C%%E7%%B4%%A2'
 DMM_THUMB_URL = 'http://pics.dmm.co.jp/digital/video/{0:s}/{0:s}pt.jpg'
 DMM_POSTER_URL = 'http://pics.dmm.co.jp/digital/video/{0:s}/{0:s}ps.jpg'
 DMM_COVER_URL = 'http://pics.dmm.co.jp/digital/video/{0:s}/{0:s}pl.jpg'
-DMM_ACTOR_URL = 'http://actress.dmm.co.jp/-/detail/=/actress_id=%s/'
+DMM_ACTOR_URL = 'http://actress.dmm.co.jp/-/detail/=/actress_id={}/'
 
 
 def Start():
@@ -55,7 +55,7 @@ class DMMAgent(Agent.Movies):
         return item_id
 
     def get_actor_photo(self, id, name):
-        url = DMM_ACTOR_URL % id
+        url = DMM_ACTOR_URL.format(id)
         proxies = self.get_proxies()
         page = requests.get(url, proxies=proxies)
         root = HTML.ElementFromString(page.text)
@@ -176,7 +176,7 @@ class DMMAgent(Agent.Movies):
                  media.title, metadata.id, VERSION_NO)
         try:
             # Make url
-            url = DMM_ITEM_INFO % metadata.id
+            url = DMM_ITEM_INFO.format(metadata.id)
             # fetch HTML
             proxies = self.get_proxies()
             page = requests.get(url, proxies=proxies)
@@ -284,6 +284,6 @@ class DMMAgent(Agent.Movies):
             metadata.posters[poster_url] = Proxy.Preview(
                 HTTP.Request(thumb_url))
 
-        except Exception, e:
+        except Exception as e:
             Log.Error(
                 'Error obtaining data for item with id %s (%s) [%s] ', metadata.id, url, e.message)
