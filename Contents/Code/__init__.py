@@ -133,7 +133,7 @@ class DMMAgent(Agent.Movies):
 
             # Write search result status to log
             if found:
-                self.log('Found %s result(s) for query "%s',
+                self.log('Found %s result(s) for query "%s"',
                          len(found), jav_id)
 
                 for i, f in enumerate(found, 1):
