@@ -119,23 +119,23 @@ class DMMAgent(Agent.Movies):
         jav_id = self.extract_jav_id(String.Unquote(media.filename))
 
         if jav_id:
-            Log('*** SEARCHING FOR "%s" - DMMAgent v.%s ***',
-                jav_id, VERSION_NO)
+            Log.Debug('*** SEARCHING FOR "%s" - DMMAgent v.%s ***',
+                      jav_id, VERSION_NO)
             found = self.do_search(jav_id)
 
             # Write search result status to log
             if found:
-                Log('Found %s result(s) for query "%s"',
-                    len(found), jav_id)
+                Log.Debug('Found %s result(s) for query "%s"',
+                          len(found), jav_id)
 
                 for i, f in enumerate(found, 1):
-                    Log('    %s. %s [%s] {%s}', i,
-                        f['title'], f['url'], f['thumb'])
+                    Log.Debug('    %s. %s [%s] {%s}', i,
+                              f['title'], f['url'], f['thumb'])
             else:
-                Log('No results found for query "%s"', jav_id)
+                Log.Debug('No results found for query "%s"', jav_id)
                 return
 
-            Log('-' * 60)
+            Log.Debug('-' * 60)
 
             # walk the found items and gather extended information
             score = 100
@@ -164,8 +164,8 @@ class DMMAgent(Agent.Movies):
 
     def update(self, metadata, media, lang):
 
-        Log('*** UPDATING "%s" ID: %s - DMMAgent v.%s ***',
-            media.title, metadata.id, VERSION_NO)
+        Log.Debug('*** UPDATING "%s" ID: %s - DMMAgent v.%s ***',
+                  media.title, metadata.id, VERSION_NO)
         try:
             # Make url
             url = DMM_ITEM_INFO.format(metadata.id)
@@ -181,7 +181,7 @@ class DMMAgent(Agent.Movies):
             # title
             title_elmt = root.xpath('//h1[@id="title"]')
             if title_elmt:
-                Log('Title: ' + title_elmt[0].text)
+                Log.Debug('Title: ' + title_elmt[0].text)
                 metadata.title = title_elmt[0].text
 
             # release date & year
@@ -196,7 +196,7 @@ class DMMAgent(Agent.Movies):
                     if len(date_elmt):
                         date_str = date_elmt[0].text.strip()
 
-                Log('Release date: ' + date_str)
+                Log.Debug('Release date: ' + date_str)
                 # parse date string into date object
                 release_date = Datetime.ParseDate(date_str)
                 if release_date:
@@ -208,7 +208,7 @@ class DMMAgent(Agent.Movies):
             summary_elmt = root.xpath(u'//div[@class="mg-b20 lh4"]')
             if summary_elmt:
                 summary_text = summary_elmt[0].text.strip()
-                Log('Summary: ' + summary_text)
+                Log.Debug('Summary: ' + summary_text)
                 metadata.summary = summary_text
 
             # genre
@@ -226,8 +226,8 @@ class DMMAgent(Agent.Movies):
             metadata.roles.clear()
             actor_elmts = root.xpath('//span[@id="performer"]/a[@href!="#"]')
             if actor_elmts:
-                Log('Actor(s): ' +
-                    ' '.join([a.text for a in actor_elmts]))
+                Log.Debug('Actor(s): ' +
+                          ' '.join([a.text for a in actor_elmts]))
                 for a in actor_elmts:
                     role = metadata.roles.new()
                     # Add to actor
@@ -241,8 +241,8 @@ class DMMAgent(Agent.Movies):
             director_elmts = root.xpath(
                 u'//td[contains(text(), "監督")]/following-sibling::td[1]/a')
             if director_elmts:
-                Log("Director(s): " +
-                    ' '.join([d.text for d in director_elmts]))
+                Log.Debug("Director(s): " +
+                          ' '.join([d.text for d in director_elmts]))
                 for d in director_elmts:
                     metadata.directors.add(d.text)
 
@@ -250,7 +250,7 @@ class DMMAgent(Agent.Movies):
             studio_elmt = root.xpath(
                 u'//td[contains(text(),"メーカー")]/following-sibling::td[1]/a')
             if studio_elmt:
-                Log('Studio: ' + studio_elmt[0].text)
+                Log.Debug('Studio: ' + studio_elmt[0].text)
                 metadata.studio = studio_elmt[0].text
 
             # add series to collection
@@ -258,8 +258,8 @@ class DMMAgent(Agent.Movies):
             series_elmts = root.xpath(
                 u'//td[contains(text(),"シリーズ")]/following-sibling::td[1]/a')
             if series_elmts:
-                Log("Series(s): " +
-                    ' '.join([s.text for s in series_elmts]))
+                Log.Debug("Series(s): " +
+                          ' '.join([s.text for s in series_elmts]))
                 for s in series_elmts:
                     metadata.collections.add(s.text)
 
@@ -267,7 +267,7 @@ class DMMAgent(Agent.Movies):
             # of 5)
             rating = metadata.rating = self.get_rating(root) * 2
             if rating:
-                Log('Rating: %.1f', rating)
+                Log.Debug('Rating: %.1f', rating)
                 metadata.rating = rating
 
             # Posters
