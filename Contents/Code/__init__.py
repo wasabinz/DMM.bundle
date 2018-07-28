@@ -26,7 +26,6 @@ class DMMAgent(Agent.Movies):
     languages = [Locale.Language.NoLanguage]
     accepts_from = ['com.plexapp.agents.localmedia']
     primary_provider = True
-    version = VERSION_NO
 
     def log(self, message, *args, **kwargs):
         """ Writes message to the log file. """
