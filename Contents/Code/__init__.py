@@ -6,7 +6,7 @@ ART = 'dmm-content-icon.png'
 ICON = 'icon-default.png'
 
 # URLS
-VERSION_NO = '0.2015.8.17.0'
+VERSION_NO = '2018.7.28'
 DMM_BASE_URL = 'http://www.dmm.co.jp/'
 DMM_ITEM_INFO = DMM_BASE_URL + 'digital/videoa/-/detail/=/cid={}/'
 DMM_SEARCH_URL = DMM_BASE_URL + \
@@ -26,6 +26,7 @@ class DMMAgent(Agent.Movies):
     languages = [Locale.Language.NoLanguage]
     accepts_from = ['com.plexapp.agents.localmedia']
     primary_provider = True
+    version = VERSION_NO
 
     def log(self, message, *args, **kwargs):
         """ Writes message to the log file. """
