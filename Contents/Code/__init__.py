@@ -170,7 +170,7 @@ class DMMAgent(Agent.Movies):
 
     def update(self, metadata, media, lang):
 
-        self.log('***** UPDATING "%s" ID: %s - DMMAgent v.%s *****',
+        self.log('*** UPDATING "%s" ID: %s - DMMAgent v.%s ***',
                  media.title, metadata.id, VERSION_NO)
         try:
             # Make url
