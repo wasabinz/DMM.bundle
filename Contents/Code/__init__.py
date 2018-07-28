@@ -10,10 +10,10 @@ VERSION_NO = '0.2015.8.17.0'
 DMM_BASE_URL = 'http://www.dmm.co.jp/'
 DMM_ITEM_INFO = DMM_BASE_URL + 'digital/videoa/-/detail/=/cid={}/'
 DMM_SEARCH_URL = DMM_BASE_URL + \
-    'search/?category=digital_videoa&searchstr=%s&analyze=V1EBDFYOUAU_&redirect=1&sort=date&limit=30&view=text&enc=UTF-8&commit=%%E6%%A4%%9C%%E7%%B4%%A2'
-DMM_THUMB_URL = 'http://pics.dmm.co.jp/digital/video/{0:s}/{0:s}pt.jpg'
-DMM_POSTER_URL = 'http://pics.dmm.co.jp/digital/video/{0:s}/{0:s}ps.jpg'
-DMM_COVER_URL = 'http://pics.dmm.co.jp/digital/video/{0:s}/{0:s}pl.jpg'
+    'search/?category=digital_videoa&searchstr={}&analyze=V1EBDFYOUAU_&redirect=1&sort=date&limit=30&view=text&enc=UTF-8&commit=%%E6%%A4%%9C%%E7%%B4%%A2'
+DMM_THUMB_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}pt.jpg'
+DMM_POSTER_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}ps.jpg'
+DMM_COVER_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}pl.jpg'
 DMM_ACTOR_URL = 'http://actress.dmm.co.jp/-/detail/=/actress_id={}/'
 
 
@@ -72,7 +72,7 @@ class DMMAgent(Agent.Movies):
         """
 
         proxies = self.get_proxies()
-        search_url = DMM_SEARCH_URL % query
+        search_url = DMM_SEARCH_URL.format(query)
         page = requests.get(search_url, proxies=proxies)
         root = HTML.ElementFromString(page.text)
 
@@ -86,7 +86,7 @@ class DMMAgent(Agent.Movies):
             if not item_id:
                 continue
             # generate thumbnail url
-            thumb = DMM_THUMB_URL.format(item_id, item_id)
+            thumb = DMM_THUMB_URL.format(item_id)
 
             found.append({'item_id': item_id, 'url': murl,
                           'title': title, 'thumb': thumb})
@@ -125,7 +125,7 @@ class DMMAgent(Agent.Movies):
         jav_id = self.extract_jav_id(String.Unquote(media.filename))
 
         if jav_id:
-            self.log('***** SEARCHING FOR "%s" - DMMAgent v.%s *****',
+            self.log('*** SEARCHING FOR "%s" - DMMAgent v.%s ***',
                      jav_id, VERSION_NO)
             found = self.do_search(jav_id)
 
