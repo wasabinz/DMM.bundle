@@ -11,7 +11,8 @@
 	<key>PlexAgentAttributionText</key>
 	<string>
 		Primary metadata provided by &lt;a href=&quot;https://www.dmm.co.jp&quot;&gt;DMM&lt;/a&gt;.
-		The DMM Corporation is a major distributor of videos in Japan for both sales and rental, and also provides pay-per-view and downloadable digital adult content.
+		The DMM Corporation is a major distributor of videos in Japan for both sales and rental,
+		and also provides pay-per-view and downloadable digital adult content.
 	</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
