@@ -23,7 +23,7 @@ def Start():
 
 class DMMAgent(Agent.Movies):
     name = 'DMM'
-    languages = [Locale.Language.NoLanguage]
+    languages = [Locale.Language.English, Locale.Language.Japanese]
     accepts_from = ['com.plexapp.agents.localmedia']
     primary_provider = True
 
