@@ -100,13 +100,14 @@ class DMMAgent(Agent.Movies):
         """
 
         jav_id = ''
-        id_match = re.search(r'(([a-zA-Z]{2,5})|(T28))[-]?(\d{3,6})', name)
+        id_match = re.search(
+            r'(?P<code>([a-zA-Z]{2,5})|(T28))[-]?(?P<num>\d{3,6})', name)
         if id_match:
 
             # jav id is broken up into ID code (the first few letters)
             # and the ID number (the remaining numbers)
-            id_code = id_match.group(1).lower()
-            id_num = id_match.group(4)
+            id_code = id_match.group('code').lower()
+            id_num = id_match.group('num')
 
             # convert JAV ID into normalized form. The code numbers are
             # right justified by '0' characters. The amount of justific-
