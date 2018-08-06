@@ -2,9 +2,6 @@
 import re
 import requests
 
-ART = 'dmm-content-icon.png'
-ICON = 'icon-default.png'
-
 # URLS
 VERSION_NO = '2018.7.28'
 DMM_BASE_URL = 'http://www.dmm.co.jp/'
@@ -234,7 +231,7 @@ class DMMAgent(Agent.Movies):
             actor_elmts = root.xpath('//span[@id="performer"]/a[@href!="#"]')
             if actor_elmts:
                 self.log('Actor(s): ' +
-                         ' '.join([a.text for a in actor_elmts]))
+                         ' '.join(a.text for a in actor_elmts))
                 for a in actor_elmts:
                     role = metadata.roles.new()
                     # Add to actor
@@ -249,7 +246,7 @@ class DMMAgent(Agent.Movies):
                 u'//td[contains(text(), "監督")]/following-sibling::td[1]/a')
             if director_elmts:
                 self.log("Director(s): " +
-                         ' '.join([d.text for d in director_elmts]))
+                         ' '.join(d.text for d in director_elmts))
                 for d in director_elmts:
                     metadata.directors.add(d.text)
 
@@ -266,7 +263,7 @@ class DMMAgent(Agent.Movies):
                 u'//td[contains(text(),"シリーズ")]/following-sibling::td[1]/a')
             if series_elmts:
                 self.log("Series(s): " +
-                         ' '.join([s.text for s in series_elmts]))
+                         ' '.join(s.text for s in series_elmts))
                 for s in series_elmts:
                     metadata.collections.add(s.text)
 
