@@ -258,14 +258,15 @@ class DMMAgent(Agent.Movies):
                 metadata.studio = studio_elmt[0].text
 
             # add series to collection
-            metadata.collections.clear()
-            series_elmts = root.xpath(
-                u'//td[contains(text(),"シリーズ")]/following-sibling::td[1]/a')
-            if series_elmts:
-                self.log("Series(s): " +
-                         ' '.join(s.text for s in series_elmts))
-                for s in series_elmts:
-                    metadata.collections.add(s.text)
+            if Prefs['addcollection']:
+                metadata.collections.clear()
+                series_elmts = root.xpath(
+                    u'//td[contains(text(),"シリーズ")]/following-sibling::td[1]/a')
+                if series_elmts:
+                    self.log("Series(s): " +
+                             ' '.join(s.text for s in series_elmts))
+                    for s in series_elmts:
+                        metadata.collections.add(s.text)
 
             # rating (Plex rating is out of 10 while DMM rating is out
             # of 5)
