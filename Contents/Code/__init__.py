@@ -269,7 +269,7 @@ class DMMAgent(Agent.Movies):
 
             # rating (Plex rating is out of 10 while DMM rating is out
             # of 5)
-            rating = metadata.rating = self.get_rating(root) * 2
+            rating = self.get_rating(root) * 2
             if rating:
                 self.log('Rating: %.1f', rating)
                 metadata.rating = rating
