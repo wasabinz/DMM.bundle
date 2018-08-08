@@ -193,14 +193,14 @@ class DMMAgent(Agent.Movies):
             # title
             title_elmt = root.xpath('//h1[@id="title"]')
             if title_elmt:
-                self.log('Title: ' + title_elmt[0].text)
-                metadata.title = title_elmt[0].text
-
-                # append id to the title
+                # metadata.title = title_elmt[0].text
+                title_text = title_elmt[0].text
+                # append id to the title if needed
                 if Prefs['appendid']:
                     id_code, id_num = self.extract_jav_id(metadata.id)
-                    metadata.title += " ({}{:>05})".format(id_code.upper(),
-                                                           id_num)
+                    title_text += " ({}{:>05})".format(id_code.upper(), id_num)
+                metadata.title = title_text
+                self.log('Title: ' + title_text)
 
             # release date & year
             date_elmt = root.xpath(
