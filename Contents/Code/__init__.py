@@ -128,6 +128,7 @@ class DMMAgent(Agent.Movies):
 
         if jav_id:
 
+            # Turn id into format that is recognizable by DMM search engine
             id_str = self.jav_id_to_str(*jav_id)
 
             self.log('*** SEARCHING FOR "%s" - DMMAgent v.%s ***',
