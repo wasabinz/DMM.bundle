@@ -101,7 +101,7 @@ class DMMAgent(Agent.Movies):
 
             # jav id is broken up into ID code (the first few letters)
             # and the ID number (the remaining numbers)
-            id_code = id_match.group('code')
+            id_code = id_match.group('code').lower()
             id_num = id_match.group('num').lstrip('0')
 
             return id_code, id_num
@@ -195,6 +195,12 @@ class DMMAgent(Agent.Movies):
             if title_elmt:
                 self.log('Title: ' + title_elmt[0].text)
                 metadata.title = title_elmt[0].text
+
+                # append id to the title
+                if Prefs['appendid']:
+                    id_code, id_num = self.extract_jav_id(metadata.id)
+                    metadata.title += " ({}{:>05})".format(id_code.upper(),
+                                                           id_num)
 
             # release date & year
             date_elmt = root.xpath(

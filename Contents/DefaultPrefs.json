@@ -12,6 +12,12 @@
         "default": "false"
     },
     {
+        "id": "appendid",
+        "label": "Append ID to title",
+        "type": "bool",
+        "default": "false"
+    },
+    {
         "id": "httpproxy",
         "label": "HTTP proxy",
         "type": "text",
