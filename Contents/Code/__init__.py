@@ -187,7 +187,7 @@ class DMMAgent(Agent.Movies):
             root = HTML.ElementFromString(page.text)
 
             # content rating
-            metadata.content_rating = 'X'
+            metadata.content_rating = 'R18+'
             # set tagline to URL
             metadata.tagline = url
             # title
