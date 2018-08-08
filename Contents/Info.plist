@@ -6,9 +6,10 @@
 	<string>com.plexapp.agents.dmm</string>
 	<key>PlexAgentAttributionText</key>
 	<string>
-		Primary metadata provided by &lt;a href=&quot;https://www.dmm.co.jp&quot;&gt;DMM&lt;/a&gt;.
-		The DMM Corporation is a major distributor of videos in Japan for both sales and rental,
-		and also provides pay-per-view and downloadable digital adult content.
+		Primary metadata provided by &lt;a href=&quot;https://www.dmm.co.jp&quot;&gt;Fanza&lt;/a&gt;
+		(formerly DMM.R18) of DMM Corporation. The DMM Corporation is a major 
+		distributor of videos in Japan for both sales and rental, and also 
+		provides pay-per-view and downloadable digital adult content.
 	</string>
 	<key>PlexFrameworkVersion</key>
 	<string>2</string>
