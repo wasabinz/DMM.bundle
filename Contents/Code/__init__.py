@@ -198,7 +198,7 @@ class DMMAgent(Agent.Movies):
                 # append id to the title if needed
                 if Prefs['appendid']:
                     id_code, id_num = self.extract_jav_id(metadata.id)
-                    title_text += " ({}{:>05})".format(id_code.upper(), id_num)
+                    title_text += " ({}{:>03})".format(id_code.upper(), id_num)
                 metadata.title = title_text
                 self.log('Title: ' + title_text)
 
