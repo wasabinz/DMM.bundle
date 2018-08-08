@@ -91,31 +91,35 @@ class DMMAgent(Agent.Movies):
         return found
 
     def extract_jav_id(self, name):
-        """ This function extracts JAV ID in from the name argument.
-        The output will be a normalized form of the JAV ID found in the
-        argument.
+        """ This function extracts JAV ID in from the name argument and
+        returns them as a tuple.
         """
 
-        jav_id = ''
         id_match = re.search(
             r'(?P<code>([a-zA-Z]{2,5})|(T28))[-]?(?P<num>\d{3,6})', name)
         if id_match:
 
             # jav id is broken up into ID code (the first few letters)
             # and the ID number (the remaining numbers)
-            id_code = id_match.group('code').lower()
-            id_num = id_match.group('num')
+            id_code = id_match.group('code')
+            id_num = id_match.group('num').lstrip('0')
 
-            # convert JAV ID into normalized form. The code numbers are
-            # right justified by '0' characters. The amount of justific-
-            # ation is dependent on the JAV code.
-            rjust_c = 5
-            if id_code == 'hodv':
-                rjust_c = 6
+            return id_code, id_num
 
-            jav_id = id_code + id_num.rjust(rjust_c, '0')
+        else:
+            return None
 
-        return jav_id
+    def jav_id_to_str(self, id_code, id_num):
+        """ convert JAV ID into normalized form. The code numbers are
+        right justified by '0' characters. The amount of justification
+        depends on the JAV code.
+        """
+
+        rjust_c = 5
+        if id_code == 'hodv':
+            rjust_c = 6
+
+        return id_code + id_num.rjust(rjust_c, '0')
 
     def search(self, results, media, lang):
 
@@ -123,20 +127,23 @@ class DMMAgent(Agent.Movies):
         jav_id = self.extract_jav_id(String.Unquote(media.filename))
 
         if jav_id:
+
+            id_str = self.jav_id_to_str(*jav_id)
+
             self.log('*** SEARCHING FOR "%s" - DMMAgent v.%s ***',
-                     jav_id, VERSION_NO)
-            found = self.do_search(jav_id)
+                     id_str, VERSION_NO)
+            found = self.do_search(id_str)
 
             # Write search result status to log
             if found:
                 self.log('Found %s result(s) for query "%s"',
-                         len(found), jav_id)
+                         len(found), id_str)
 
                 for i, f in enumerate(found, 1):
                     self.log('    %s. %s [%s] {%s}', i,
                              f['title'], f['url'], f['thumb'])
             else:
-                self.log('No results found for query "%s"', jav_id)
+                self.log('No results found for query "%s"', id_str)
                 return
 
             self.log('-' * 60)
