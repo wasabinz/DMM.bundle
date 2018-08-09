@@ -230,15 +230,11 @@ class DMMAgent(Agent.Movies):
                 metadata.summary = summary_text
 
             # genre
-            genre_filter = list()
-            if Prefs["excludegenre"]:
-                genre_filter = String.Unquote(Prefs["excludegenre"]).split(';')
             metadata.genres.clear()
             genre_elmts = root.xpath(
                 u'//td[contains(text(),"ジャンル")]/following-sibling::td[1]/a')
             for g in genre_elmts:
-                if g.text not in genre_filter:
-                    metadata.genres.add(g.text)
+                metadata.genres.add(g.text)
 
             # actors
             metadata.roles.clear()
