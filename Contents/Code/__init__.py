@@ -55,7 +55,7 @@ class DMMAgent(Agent.Movies):
         page = requests.get(url, proxies=proxies)
         root = HTML.ElementFromString(page.text)
 
-        imgElmt = root.xpath('//img[@alt="{}"]'.format(name))
+        imgElmt = root.xpath(u'//img[@alt="{}"]'.format(name))
         if imgElmt:
             return imgElmt[0].get('src')
 
