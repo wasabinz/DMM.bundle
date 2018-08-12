@@ -105,9 +105,6 @@ class DMMAgent(Agent.Movies):
 
             return id_code, id_num
 
-        else:
-            return None
-
     def jav_id_to_str(self, id_code, id_num):
         """ convert JAV ID into normalized form. The code numbers are
         right justified by '0' characters. The amount of justification
