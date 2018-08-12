@@ -80,13 +80,12 @@ class DMMAgent(Agent.Movies):
             murl = r.get('href')
             # pull item id from URL
             item_id = self.get_item_from_link('cid', murl)
-            if not item_id:
-                continue
-            # generate thumbnail url
-            thumb = DMM_THUMB_URL.format(item_id)
+            if item_id:
+                # generate thumbnail url
+                thumb = DMM_THUMB_URL.format(item_id)
 
-            found.append({'item_id': item_id, 'url': murl,
-                          'title': title, 'thumb': thumb})
+                found.append({'item_id': item_id, 'url': murl,
+                              'title': title, 'thumb': thumb})
 
         return found
 
