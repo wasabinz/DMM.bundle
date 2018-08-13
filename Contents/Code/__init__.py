@@ -254,7 +254,8 @@ class DMMAgent(Agent.Movies):
                 self.log("Director(s): " +
                          ' '.join(d.text for d in director_elmts))
                 for d in director_elmts:
-                    metadata.directors.add(d.text)
+                    director = metadata.directors.new()
+                    director.name = d.text
 
             # studio
             studio_elmt = root.xpath(
