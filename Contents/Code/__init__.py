@@ -293,7 +293,8 @@ class DMMAgent(Agent.Movies):
             smple_c = len(root.xpath(u'//a[@name="sample-image"]'))
             for i in range(1, smple_c + 1):
                 smple_url = DMM_SAMPLE_URL.format(metadata.id, i)
-                metadata.art[smple_url] = Proxy.Media(smple_url)
+                metadata.art[smple_url] = Proxy.Media(
+                    HTTP.Request(smple_url))
 
         except Exception as e:
             Log.Error(
