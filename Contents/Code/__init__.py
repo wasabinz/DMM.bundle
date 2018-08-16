@@ -290,7 +290,7 @@ class DMMAgent(Agent.Movies):
                 HTTP.Request(thumb_url))
 
             # arts
-            smple_c = root.xpath(u'//a[@name="sample-image"]').len()
+            smple_c = len(root.xpath(u'//a[@name="sample-image"]'))
             for i in range(1, smple_c + 1):
                 smple_url = DMM_SAMPLE_URL.format(metadata.id, i)
                 metadata.art[smple_url] = smple_url
