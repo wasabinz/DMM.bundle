@@ -293,7 +293,7 @@ class DMMAgent(Agent.Movies):
             thumb_urls = root.xpath(u'//a[@name="sample-image"]/img/@src')
             for i, url in enumerate(thumb_urls, 1):
                 smple_url = DMM_SAMPLE_URL.format(metadata.id, i)
-                metadata.arts[smple_url] = Proxy.Preview(
+                metadata.art[smple_url] = Proxy.Preview(
                     HTTP.Request(url))
 
         except Exception as e:
