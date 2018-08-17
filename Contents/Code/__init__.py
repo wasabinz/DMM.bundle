@@ -208,13 +208,6 @@ class DMMAgent(Agent.Movies):
                     metadata.originally_available_at = release_date
                     metadata.year = release_date.year
 
-            self.log('Release date: ' + date_str)
-            # parse date string into date object
-            release_date = Datetime.ParseDate(date_str)
-            if release_date:
-                metadata.originally_available_at = release_date
-                metadata.year = release_date.year
-
             # summary (the xpath might need to be updated when website
             # changes its layout)
             summary_elmt = root.xpath(u'//div[@class="mg-b20 lh4"]')
