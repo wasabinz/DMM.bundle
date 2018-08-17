@@ -203,7 +203,7 @@ class DMMAgent(Agent.Movies):
                 u'//td[contains(text(),"配信開始日")]/following-sibling::td[1]')
             if date_elmt:
                 release_date = Datetime.ParseDate(date_elmt[0].text.strip())
-                self.log('Release date: ' + release_date)
+                self.log('Release date: ' + str(release_date))
                 if release_date:
                     metadata.originally_available_at = release_date
                     metadata.year = release_date.year
