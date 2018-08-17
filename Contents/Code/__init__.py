@@ -12,6 +12,7 @@ DMM_THUMB_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}pt.jpg'
 DMM_POSTER_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}ps.jpg'
 DMM_COVER_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}pl.jpg'
 DMM_ACTOR_URL = 'http://actress.dmm.co.jp/-/detail/=/actress_id={}/'
+DMM_SAMPLE_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}jp-{1}.jpg'
 
 
 def Start():
@@ -273,11 +274,21 @@ class DMMAgent(Agent.Movies):
                 self.log('Rating: %.1f', rating)
                 metadata.rating = rating
 
-            # Posters
+            # Posters and cover
             thumb_url = DMM_THUMB_URL.format(metadata.id)
             poster_url = DMM_POSTER_URL.format(metadata.id)
             metadata.posters[poster_url] = Proxy.Preview(
-                HTTP.Request(thumb_url))
+                HTTP.Request(thumb_url), 1)
+            cover_url = DMM_COVER_URL.format(metadata.id)
+            metadata.posters[cover_url] = Proxy.Media(
+                HTTP.Request(cover_url), 2)
+
+            # arts
+            smple_c = len(root.xpath(u'//a[@name="sample-image"]'))
+            for i in range(1, smple_c + 1):
+                smple_url = DMM_SAMPLE_URL.format(metadata.id, i)
+                metadata.art[smple_url] = Proxy.Media(
+                    HTTP.Request(smple_url))
 
         except Exception as e:
             Log.Error(
