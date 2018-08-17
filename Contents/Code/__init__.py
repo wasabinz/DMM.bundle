@@ -283,11 +283,14 @@ class DMMAgent(Agent.Movies):
                 self.log('Rating: %.1f', rating)
                 metadata.rating = rating
 
-            # Posters
+            # Posters and cover
             thumb_url = DMM_THUMB_URL.format(metadata.id)
             poster_url = DMM_POSTER_URL.format(metadata.id)
             metadata.posters[poster_url] = Proxy.Preview(
                 HTTP.Request(thumb_url))
+            cover_url = DMM_COVER_URL.format(metadata.id)
+            metadata.posters[cover_url] = Proxy.Media(
+                HTTP.Request(cover_url))
 
             # arts
             smple_c = len(root.xpath(u'//a[@name="sample-image"]'))
