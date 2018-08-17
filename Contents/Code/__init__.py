@@ -200,22 +200,20 @@ class DMMAgent(Agent.Movies):
 
             # release date & year
             date_elmt = root.xpath(
-                u'//td[contains(text(),"商品発売日")]/following-sibling::td[1]')
+                u'//td[contains(text(),"配信開始日")]/following-sibling::td[1]')
             if date_elmt:
-                date_str = date_elmt[0].text.strip()
-                if '----' in date_str:
-                    # if the first date is not available, choose another date field
-                    date_elmt = root.xpath(
-                        u'//td[contains(text(),"配信開始日")]/following-sibling::td[1]')
-                    if len(date_elmt):
-                        date_str = date_elmt[0].text.strip()
-
-                self.log('Release date: ' + date_str)
-                # parse date string into date object
-                release_date = Datetime.ParseDate(date_str)
+                release_date = Datetime.ParseDate(date_elmt[0].text.strip())
+                self.log('Release date: ' + release_date)
                 if release_date:
                     metadata.originally_available_at = release_date
                     metadata.year = release_date.year
+
+            self.log('Release date: ' + date_str)
+            # parse date string into date object
+            release_date = Datetime.ParseDate(date_str)
+            if release_date:
+                metadata.originally_available_at = release_date
+                metadata.year = release_date.year
 
             # summary (the xpath might need to be updated when website
             # changes its layout)
