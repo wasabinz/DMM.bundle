@@ -192,6 +192,8 @@ class DMMAgent(Agent.Movies):
             if title_elmt:
                 # metadata.title = title_elmt[0].text
                 title_text = title_elmt[0].text
+                # unmodified original title
+                metadata.original_title = title_text
                 # append id to the title if needed
                 if Prefs['appendid']:
                     id_code, id_num = self.extract_jav_id(metadata.id)
