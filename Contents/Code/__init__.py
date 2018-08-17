@@ -294,7 +294,7 @@ class DMMAgent(Agent.Movies):
             for i in range(1, smple_c + 1):
                 smple_url = DMM_SAMPLE_URL.format(metadata.id, i)
                 metadata.art[smple_url] = Proxy.Media(
-                    HTTP.Request(smple_url))
+                    HTTP.Request(smple_url), sort_order=1000)
 
         except Exception as e:
             Log.Error(
