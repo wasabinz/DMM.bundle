@@ -3,7 +3,6 @@ import re
 import requests
 
 # URLS
-VERSION_NO = '2018.7.28'
 DMM_BASE_URL = 'http://www.dmm.co.jp/'
 DMM_ITEM_INFO = DMM_BASE_URL + 'digital/videoa/-/detail/=/cid={}/'
 DMM_SEARCH_URL = DMM_BASE_URL + \
@@ -128,8 +127,7 @@ class DMMAgent(Agent.Movies):
             # Turn id into format that is recognizable by DMM search engine
             id_str = self.jav_id_to_str(*jav_id)
 
-            self.log('*** SEARCHING FOR "%s" - DMMAgent v.%s ***',
-                     id_str, VERSION_NO)
+            self.log('*** SEARCHING "%s" - DMM Plex Agent ***', id_str)
             found = self.do_search(id_str)
 
             # Write search result status to log
@@ -173,8 +171,7 @@ class DMMAgent(Agent.Movies):
 
     def update(self, metadata, media, lang):
 
-        self.log('*** UPDATING "%s" ID: %s - DMMAgent v.%s ***',
-                 media.title, metadata.id, VERSION_NO)
+        self.log('*** UPDATING "%s" - DMM Plex Agent ***', metadata.id)
         try:
             # Make url
             url = DMM_ITEM_INFO.format(metadata.id)
