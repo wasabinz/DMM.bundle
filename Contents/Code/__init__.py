@@ -33,9 +33,9 @@ class DMMAgent(Agent.Movies):
         """ pull proxy settings from preference. """
 
         proxies = {}
-        if Prefs['httpproxy'] is not None:
+        if Prefs['httpproxy']:
             proxies['http'] = Prefs["httpproxy"]
-        if Prefs['httpsproxy'] is not None:
+        if Prefs['httpsproxy']:
             proxies['https'] = Prefs["httpsproxy"]
         return proxies
 
