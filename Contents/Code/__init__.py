@@ -5,8 +5,7 @@ import requests
 # URLS
 DMM_BASE_URL = 'http://www.dmm.co.jp/'
 DMM_ITEM_INFO = DMM_BASE_URL + 'digital/videoa/-/detail/=/cid={}/'
-DMM_SEARCH_URL = DMM_BASE_URL + \
-    'search/=/searchstr={}/limit=30/n1=FgRCTw9VBA4GAVhfWkIHWw__/n2=Aw1fVhQKX1ZRAlhMUlo5QQgBU1lR/sort=ranking/view=text/'
+DMM_SEARCH_URL = DMM_BASE_URL + 'search/=/searchstr={}/limit=30/n1=FgRCTw9VBA4GAVhfWkIHWw__/n2=Aw1fVhQKX1ZRAlhMUlo5QQgBU1lR/sort=ranking/view=text/'
 DMM_THUMB_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}pt.jpg'
 DMM_POSTER_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}ps.jpg'
 DMM_COVER_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}pl.jpg'
@@ -17,11 +16,13 @@ DMM_SAMPLE_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}jp-{1}.jpg'
 def Start():
     pass
 
+
 def log(message, *args, **kwargs):
     """ Writes message to the log file depending on the preferences. """
 
     if Prefs['debug']:
         Log.Debug(message, *args, **kwargs)
+
 
 class DMMAgent(Agent.Movies):
     name = 'DMM'
@@ -59,10 +60,10 @@ class DMMAgent(Agent.Movies):
             return imgElmt[0].get('src')
 
     def do_search(self, query):
-        """ This function takes the jav id string found in the filename 
-        as query and searches it in the DMM database. The result is a 
-        list of dictionary containing item id, url, title and the 
-        thumbnail url. 
+        """ This function takes the jav id string found in the filename
+        as query and searches it in the DMM database. The result is a
+        list of dictionary containing item id, url, title and the
+        thumbnail url.
         The jav id string should be in the format that is
         searchable by the DMM database. E.g. STAR00611, HODV021050
         """
@@ -131,12 +132,10 @@ class DMMAgent(Agent.Movies):
 
             # Write search result status to log
             if found:
-                log('Found %s result(s) for query "%s"',
-                         len(found), id_str)
+                log('Found %s result(s) for query "%s"', len(found), id_str)
 
                 for i, f in enumerate(found, 1):
-                    log('    %s. %s [%s] {%s}', i,
-                             f['title'], f['url'], f['thumb'])
+                    log('\t%s. %s [%s] {%s}', i, f['title'], f['url'], f['thumb'])
             else:
                 log('No results found for query "%s"', id_str)
                 return
@@ -155,7 +154,7 @@ class DMMAgent(Agent.Movies):
 
     def get_rating(self, root):
         """ Searches for the rating element from the root element tree
-        of a DMM item info page. 
+        of a DMM item info page.
         """
 
         rating = 0.0
@@ -207,8 +206,7 @@ class DMMAgent(Agent.Movies):
                     metadata.originally_available_at = release_date
                     metadata.year = release_date.year
 
-            # summary (the xpath might need to be updated when website
-            # changes its layout)
+            # summary
             summary_elmt = root.xpath(u'//div[@class="mg-b20 lh4"]')
             if summary_elmt:
                 summary_text = summary_elmt[0].text.strip()
@@ -226,8 +224,7 @@ class DMMAgent(Agent.Movies):
             metadata.roles.clear()
             actor_elmts = root.xpath('//span[@id="performer"]/a[@href!="#"]')
             if actor_elmts:
-                log('Actor(s): ' +
-                         ' '.join(a.text for a in actor_elmts))
+                log('Actor(s): ' + ' '.join(a.text for a in actor_elmts))
                 for a in actor_elmts:
                     role = metadata.roles.new()
                     # Add to actor
@@ -241,8 +238,7 @@ class DMMAgent(Agent.Movies):
             director_elmts = root.xpath(
                 u'//td[contains(text(), "監督")]/following-sibling::td[1]/a')
             if director_elmts:
-                log("Director(s): " +
-                         ' '.join(d.text for d in director_elmts))
+                log("Director(s): " + ' '.join(d.text for d in director_elmts))
                 for d in director_elmts:
                     director = metadata.directors.new()
                     director.name = d.text
@@ -260,13 +256,11 @@ class DMMAgent(Agent.Movies):
                 series_elmts = root.xpath(
                     u'//td[contains(text(),"シリーズ")]/following-sibling::td[1]/a')
                 if series_elmts:
-                    log("Series(s): " +
-                             ' '.join(s.text for s in series_elmts))
+                    log("Series: " + ' '.join(s.text for s in series_elmts))
                     for s in series_elmts:
                         metadata.collections.add(s.text)
 
-            # rating (Plex rating is out of 10 while DMM rating is out
-            # of 5)
+            # rating (Plex rating is out of 10 while DMM rating is out of 5)
             rating = self.get_rating(root) * 2
             if rating:
                 log('Rating: %.1f', rating)
