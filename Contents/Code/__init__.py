@@ -198,7 +198,7 @@ class DMMAgent(Agent.Movies):
 
             # release date & year
             date_elmt = root.xpath(
-                u'//td[contains(text(),"配信開始日")]/following-sibling::td[1]')
+                u'//td[contains(text(),"商品発売日")]/following-sibling::td[1]')
             if date_elmt:
                 release_date = Datetime.ParseDate(date_elmt[0].text.strip())
                 log('Release date: ' + str(release_date))
