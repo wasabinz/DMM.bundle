@@ -3,9 +3,9 @@ import re
 import requests
 
 # URLS
-DMM_BASE_URL = 'http://www.dmm.co.jp/'
+DMM_BASE_URL = 'https://www.dmm.co.jp/'
 DMM_ITEM_INFO = DMM_BASE_URL + 'digital/videoa/-/detail/=/cid={}/'
-DMM_SEARCH_URL = DMM_BASE_URL + 'search/=/searchstr={}/limit=30/n1=FgRCTw9VBA4GAVhfWkIHWw__/n2=Aw1fVhQKX1ZRAlhMUlo5QQgBU1lR/sort=ranking/view=text/'
+DMM_SEARCH_URL = DMM_BASE_URL + 'digital/videoa/-/list/search/=/view=text/?searchstr={}'
 DMM_THUMB_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}pt.jpg'
 DMM_POSTER_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}ps.jpg'
 DMM_COVER_URL = 'http://pics.dmm.co.jp/digital/video/{0}/{0}pl.jpg'
