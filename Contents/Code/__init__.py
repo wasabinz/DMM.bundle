@@ -30,16 +30,6 @@ class DMMAgent(Agent.Movies):
     accepts_from = ['com.plexapp.agents.localmedia']
     primary_provider = True
 
-    def get_proxies(self):
-        """ pull proxy settings from preference. """
-
-        proxies = {}
-        if Prefs['httpproxy']:
-            proxies['http'] = Prefs["httpproxy"]
-        if Prefs['httpsproxy']:
-            proxies['https'] = Prefs["httpsproxy"]
-        return proxies
-
     def get_item_from_link(self, item, link):
 
         item_id = ''
@@ -51,10 +41,7 @@ class DMMAgent(Agent.Movies):
 
     def get_actor_photo(self, id, name):
         url = DMM_ACTOR_URL.format(id)
-        proxies = self.get_proxies()
-        page = requests.get(url,
-                            cookies={'age_check_done':'1', 'cklg':'ja'},
-                            proxies=proxies)
+        page = requests.get(url, cookies={'age_check_done':'1', 'cklg':'ja'})
         root = HTML.ElementFromString(page.text)
 
         imgElmt = root.xpath(u'//img[@alt="{}"]'.format(name))
@@ -70,9 +57,8 @@ class DMMAgent(Agent.Movies):
         searchable by the DMM database. E.g. STAR00611, HODV021050
         """
 
-        proxies = self.get_proxies()
         search_url = DMM_SEARCH_URL.format(query)
-        page = requests.get(search_url, proxies=proxies)
+        page = requests.get(search_url)
         root = HTML.ElementFromString(page.text)
 
         found = []
@@ -176,8 +162,7 @@ class DMMAgent(Agent.Movies):
             # Make url
             url = DMM_ITEM_INFO.format(metadata.id)
             # fetch HTML
-            proxies = self.get_proxies()
-            page = requests.get(url, proxies=proxies)
+            page = requests.get(url)
             root = HTML.ElementFromString(page.text)
 
             # content rating
