@@ -52,7 +52,9 @@ class DMMAgent(Agent.Movies):
     def get_actor_photo(self, id, name):
         url = DMM_ACTOR_URL.format(id)
         proxies = self.get_proxies()
-        page = requests.get(url, proxies=proxies)
+        page = requests.get(url,
+                            cookies={'age_check_done':'1', 'cklg':'ja'},
+                            proxies=proxies)
         root = HTML.ElementFromString(page.text)
 
         imgElmt = root.xpath(u'//img[@alt="{}"]'.format(name))
