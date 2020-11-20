@@ -16,17 +16,5 @@
         "label": "Append ID to title",
         "type": "bool",
         "default": "false"
-    },
-    {
-        "id": "httpproxy",
-        "label": "HTTP proxy",
-        "type": "text",
-        "default": ""
-    },
-    {
-        "id": "httpsproxy",
-        "label": "HTTPS proxy",
-        "type": "text",
-        "default": ""
     }
 ]
