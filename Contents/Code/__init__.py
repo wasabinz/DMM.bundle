@@ -29,6 +29,7 @@ class DMMAgent(Agent.Movies):
     languages = [Locale.Language.English, Locale.Language.Japanese]
     accepts_from = ['com.plexapp.agents.localmedia']
     primary_provider = True
+    cookies = {'age_check_done':'1', 'cklg':'ja'}
 
     def get_item_from_link(self, item, link):
 
@@ -41,7 +42,7 @@ class DMMAgent(Agent.Movies):
 
     def get_actor_photo(self, id, name):
         url = DMM_ACTOR_URL.format(id)
-        page = requests.get(url, cookies={'age_check_done':'1', 'cklg':'ja'})
+        page = requests.get(url, cookies=self.cookies)
         root = HTML.ElementFromString(page.text)
 
         imgElmt = root.xpath(u'//img[@alt="{}"]'.format(name))
@@ -58,7 +59,7 @@ class DMMAgent(Agent.Movies):
         """
 
         search_url = DMM_SEARCH_URL.format(query)
-        page = requests.get(search_url)
+        page = requests.get(search_url, cookies=self.cookies)
         root = HTML.ElementFromString(page.text)
 
         found = []
@@ -162,7 +163,7 @@ class DMMAgent(Agent.Movies):
             # Make url
             url = DMM_ITEM_INFO.format(metadata.id)
             # fetch HTML
-            page = requests.get(url)
+            page = requests.get(url, cookies=self.cookies)
             root = HTML.ElementFromString(page.text)
 
             # content rating
