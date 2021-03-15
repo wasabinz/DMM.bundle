@@ -50,16 +50,16 @@ class DMMAgent(Agent.Movies):
             item_id = id_match.group(1)
         return item_id
 
-    def get_actor_photo(self, id, name):
+    def get_actor_photo(self, id):
         url = DMM_ACTOR_URL.format(id)
-        log('Aquiring actor ({}) url: {}'.format(name, url))
+        log('Aquiring actor url: {}'.format(url))
         proxies = self.get_proxies()
         page = requests.get(url, cookies=self.cookies, proxies=proxies)
         root = HTML.ElementFromString(page.text)
 
-        imgElmt = root.xpath(u'//img[@alt="{}"]'.format(name))
+        imgElmt = root.xpath(u'//meta[@property="og:image"]')
         if imgElmt:
-            return imgElmt[0].get('src')
+            return imgElmt[0].get('content')
 
     def do_search(self, query):
         """ This function takes the jav id string found in the filename
@@ -233,7 +233,7 @@ class DMMAgent(Agent.Movies):
                     role.name = a.text
                     # Add actor photo
                     actor_id = self.get_item_from_link('id', a.get('href'))
-                    role.photo = self.get_actor_photo(actor_id, a.text)
+                    role.photo = self.get_actor_photo(actor_id)
 
             # director
             metadata.directors.clear()
