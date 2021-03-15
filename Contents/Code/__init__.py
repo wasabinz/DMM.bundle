@@ -29,6 +29,7 @@ class DMMAgent(Agent.Movies):
     languages = [Locale.Language.English, Locale.Language.Japanese]
     accepts_from = ['com.plexapp.agents.localmedia']
     primary_provider = True
+    cookies = {'age_check_done':'1', 'cklg':'ja'}
 
     def get_proxies(self):
         """ pull proxy settings from preference. """
@@ -52,9 +53,7 @@ class DMMAgent(Agent.Movies):
     def get_actor_photo(self, id, name):
         url = DMM_ACTOR_URL.format(id)
         proxies = self.get_proxies()
-        page = requests.get(url,
-                            cookies={'age_check_done':'1', 'cklg':'ja'},
-                            proxies=proxies)
+        page = requests.get(url, cookies=self.cookies, proxies=proxies)
         root = HTML.ElementFromString(page.text)
 
         imgElmt = root.xpath(u'//img[@alt="{}"]'.format(name))
@@ -72,7 +71,7 @@ class DMMAgent(Agent.Movies):
 
         proxies = self.get_proxies()
         search_url = DMM_SEARCH_URL.format(query)
-        page = requests.get(search_url, proxies=proxies)
+        page = requests.get(search_url, proxies=proxies, cookies=self.cookies)
         root = HTML.ElementFromString(page.text)
 
         found = []
@@ -177,7 +176,7 @@ class DMMAgent(Agent.Movies):
             url = DMM_ITEM_INFO.format(metadata.id)
             # fetch HTML
             proxies = self.get_proxies()
-            page = requests.get(url, proxies=proxies)
+            page = requests.get(url, proxies=proxies, cookies=self.cookies)
             root = HTML.ElementFromString(page.text)
 
             # content rating
