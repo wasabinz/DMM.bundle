@@ -52,6 +52,7 @@ class DMMAgent(Agent.Movies):
 
     def get_actor_photo(self, id, name):
         url = DMM_ACTOR_URL.format(id)
+        log('Aquiring actor ({}) url: {}'.format(name, url))
         proxies = self.get_proxies()
         page = requests.get(url, cookies=self.cookies, proxies=proxies)
         root = HTML.ElementFromString(page.text)
